@@ -2,7 +2,7 @@ version: "3.8"
 ---
 x-airflow-common:
   &airflow-common
-  # In order to add custom dependencies or upgrade provider packages you can use your extended image.
+  # In order to add custom dependencies or upgrade provider packages you c  an use your extended image.
   # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
   # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
   image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.8.1}
@@ -75,6 +75,17 @@ services:
 #    secrets:
 #      - db_password
 
+  ## container created for storing data
+  hydra:
+    container_name: hydra
+    image: ghcr.io/hydradatabase/hydra:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - hydra-db-volume:/var/lib/postgresql/data
+      - ${AIRFLOW_PROJ_DIR:-.}/sql/init_script_medical_data.sql:/docker-entrypoint-initdb.d/init_script_medical_data.sql
+    hostname: hydra
 
   jupyter:
     build:
@@ -279,3 +290,4 @@ services:
 volumes:
   postgres-db-volume:
   medicaldata-db-volume:
+  hydra-db-volume:
