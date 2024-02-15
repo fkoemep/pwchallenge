@@ -72,6 +72,8 @@ services:
       - ${AIRFLOW_PROJ_DIR:-.}/sql/init_script.sql:/docker-entrypoint-initdb.d/init_script.sql
     hostname: postgres_medicaldata
     restart: always
+    ports:
+      - "5433:5432"
 #    secrets:
 #      - db_password
 
@@ -86,6 +88,9 @@ services:
       - hydra-db-volume:/var/lib/postgresql/data
       - ${AIRFLOW_PROJ_DIR:-.}/sql/init_script_medical_data.sql:/docker-entrypoint-initdb.d/init_script_medical_data.sql
     hostname: hydra
+    restart: always
+    ports:
+      - "5434:5432"
 
   jupyter:
     build:

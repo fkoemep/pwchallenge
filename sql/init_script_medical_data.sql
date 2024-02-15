@@ -1,8 +1,6 @@
 -- noinspection SqlNoDataSourceInspectionForFile
 CREATE TABLE IF NOT EXISTS dim_patient (
-    patient_id VARCHAR(400) PRIMARY KEY,
-    name VARCHAR(200),
-    phone_number VARCHAR(100)
+    patient_id VARCHAR(400) PRIMARY KEY -- no other patient fields because of privacy concerns, for example HIPAA
 );
 CREATE TABLE IF NOT EXISTS dim_doctor (
     doctor_npi_number VARCHAR(400) PRIMARY KEY,
@@ -24,4 +22,13 @@ CREATE TABLE IF NOT EXISTS fact_hospital_events (
     discharge_date TIMESTAMP,
     event_type VARCHAR(100) NOT NULL, -- stay or test for now
     total_cost DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS fact_hospital_events_alternative (
+    event_id SERIAL PRIMARY KEY,
+    patient_id VARCHAR(400) NOT NULL, --REFERENCES dim_patient(patient_id),
+    admission_test_date TIMESTAMP NOT NULL,
+    discharge_date TIMESTAMP,
+    total_stay_cost DECIMAL(10, 2) NOT NULL,
+    total_tests_cost DECIMAL(10, 2)
 );
