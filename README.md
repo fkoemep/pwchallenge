@@ -1,6 +1,6 @@
 # PWC ETL Process
 
-A simple ETL process that extracts data from a hospital operations postgres DB, transforms it, and loads it into a Hydra Data Warehouse. A separate Jupyter Notebook running as an extra docker-compose service is also included to allow for data exploration.
+A simple ETL process that extracts data from a medical data postgres DB, transforms it, and loads it into a Hydra Data Warehouse. A separate Jupyter Notebook running as an extra docker-compose service is also included to allow for data exploration.
 
 This project uses the new Airflow 2.0 version that runs on docker-compose along with the new TaskFlow API. The LocalFilesystemBackend is used as a Secrets Engine to store the database credentials for security reasons.
 
@@ -24,7 +24,7 @@ You can also access the database and the data warehouse using the following conn
 
 ```bash
 Data Warehouse: postgresql://localhost:5434/
-Hospital Operations DB: postgresql://localhost:5433/medicaldata
+Medical DB: postgresql://localhost:5433/medicaldata
 
 ```
 
